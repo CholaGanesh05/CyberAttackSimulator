@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'dart:async';
 import 'end_screen.dart';
 
@@ -7,28 +8,31 @@ class FakeLinkScreen extends StatefulWidget {
   _FakeLinkScreenState createState() => _FakeLinkScreenState();
 }
 
-class _FakeLinkScreenState extends State<FakeLinkScreen> with SingleTickerProviderStateMixin {
-  bool _showEndButton = false;
+class _FakeLinkScreenState extends State<FakeLinkScreen> with TickerProviderStateMixin {
   late AnimationController _glitchController;
+  late AnimationController _hackController;
+  bool _showEndButton = false;
 
   @override
   void initState() {
     super.initState();
     _glitchController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 200),
-      lowerBound: -0.5,
-      upperBound: 0.5,
+      duration: Duration(milliseconds: 50),
     )..repeat();
     
-    Timer(Duration(seconds: 10), () {
-      setState(() => _showEndButton = true);
-    });
+    _hackController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 10),
+    )..forward();
+
+    Timer(Duration(seconds: 10), () => setState(() => _showEndButton = true));
   }
 
   @override
   void dispose() {
     _glitchController.dispose();
+    _hackController.dispose();
     super.dispose();
   }
 
@@ -39,29 +43,32 @@ class _FakeLinkScreenState extends State<FakeLinkScreen> with SingleTickerProvid
         return Stack(
           children: [
             Transform.translate(
-              offset: Offset(_glitchController.value * 3, 0),
-              child: Text(
-                text,
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      color: Colors.red.withOpacity(0.5),
-                      blurRadius: 20,
-                    ),
-                  ],
-                ),
-              ),
+              offset: Offset((sin(_glitchController.value * 20) * 3, 0),
+              child: Text(text,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 28,
+                    shadows: [
+                      Shadow(
+                        color: Colors.red.withOpacity(0.5),
+                        blurRadius: 20,
+                      ),
+                    ],
+                  )),
             ),
-            Text(
-              text,
-              style: TextStyle(
-                color: Colors.red.shade100,
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
+            Transform.translate(
+              offset: Offset(0, (cos(_glitchController.value * 20) * 2)),
+              child: Text(text,
+                  style: TextStyle(
+                    color: Colors.greenAccent,
+                    fontSize: 28,
+                    shadows: [
+                      Shadow(
+                        color: Colors.green.withOpacity(0.3),
+                        blurRadius: 15,
+                      ),
+                    ],
+                  )),
             ),
           ],
         );
@@ -77,71 +84,66 @@ class _FakeLinkScreenState extends State<FakeLinkScreen> with SingleTickerProvid
         backgroundColor: Colors.black,
         body: Stack(
           children: [
-            // Matrix rain background
-            ShaderMask(
-              shaderCallback: (bounds) => LinearGradient(
-                colors: [Colors.black, Colors.transparent],
-                stops: [0.5, 1.0],
-              ).createShader(bounds),
-              blendMode: BlendMode.dstIn,
-              child: Opacity(
-                opacity: 0.3,
-                child: Image.asset('assets/matrix_rain.gif', fit: BoxFit.cover),
-              ),
+            AnimatedBuilder(
+              animation: _hackController,
+              builder: (context, child) {
+                return CustomPaint(
+                  painter: MatrixPainter(_hackController.value),
+                  size: Size.infinite,
+                );
+              },
             ),
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildGlitchText("⚠️ CRITICAL ERROR ⚠️"),
-                  SizedBox(height: 30),
+                  _buildGlitchText("🛑 SYSTEM BREACHED 🛑"),
+                  SizedBox(height: 40),
                   SizedBox(
-                    width: 80,
-                    height: 80,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 4,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
-                      backgroundColor: Colors.red.withOpacity(0.2),
+                    width: 150,
+                    height: 150,
+                    child: LiquidCircularProgressIndicator(
+                      value: _hackController.value,
+                      valueColor: AlwaysStoppedAnimation(Colors.red),
+                      backgroundColor: Colors.black,
+                      borderColor: Colors.red,
+                      borderWidth: 2,
+                      direction: Axis.vertical,
+                      center: AnimatedCountup(
+                        begin: 0,
+                        end: 100,
+                        duration: Duration(seconds: 10),
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 40),
                   if (_showEndButton)
-                    TweenAnimationBuilder(
-                      tween: Tween(begin: 0.0, end: 1.0),
-                      duration: Duration(seconds: 1),
-                      builder: (context, value, child) {
-                        return Opacity(
-                          opacity: value,
-                          child: Transform.scale(
-                            scale: value,
-                            child: child,
-                          ),
-                        );
-                      },
-                      child: ElevatedButton(
+                    ScaleTransition(
+                      scale: CurvedAnimation(
+                        parent: _hackController,
+                        curve: Curves.elasticOut,
+                      ),
+                      child: ElevatedButton.icon(
+                        icon: Icon(Icons.emergency),
+                        label: Text("EMERGENCY SHUTDOWN"),
                         style: ElevatedButton.styleFrom(
                           primary: Colors.red.shade900,
                           onPrimary: Colors.white,
-                          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          elevation: 10,
-                          shadowColor: Colors.red.withOpacity(0.5),
+                          shape: StadiumBorder(),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 20),
+                          shadowColor: Colors.red,
+                          elevation: 15,
                         ),
                         onPressed: () => Navigator.pushReplacement(
                           context,
-                          PageRouteBuilder(
-                            transitionDuration: Duration(milliseconds: 800),
-                            pageBuilder: (_, __, ___) => EndScreen(),
-                            transitionsBuilder: (_, a, __, c) => FadeTransition(
-                              opacity: a,
-                              child: c,
-                            ),
-                          ),
+                          MaterialPageRoute(builder: (_) => EndScreen()),
                         ),
-                        child: Text("TERMINATE SIMULATION",
-                            style: TextStyle(letterSpacing: 1.2)),
                       ),
                     ),
                 ],
@@ -153,3 +155,31 @@ class _FakeLinkScreenState extends State<FakeLinkScreen> with SingleTickerProvid
     );
   }
 }
+
+class MatrixPainter extends CustomPainter {
+  final double progress;
+
+  MatrixPainter(this.progress);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.green.withOpacity(0.1)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1;
+
+    final random = Random(DateTime.now().millisecond);
+    
+    for (int i = 0; i < 100 * progress; i++) {
+      final x = random.nextDouble() * size.width;
+      final y = random.nextDouble() * size.height;
+      canvas.drawLine(
+        Offset(x, y),
+        Offset(x, y + 30),
+        paint,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) =>
