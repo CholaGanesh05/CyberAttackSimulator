@@ -10,7 +10,7 @@ class DataExfiltrationSimApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'CyberSec Training Simulator',
+      title: 'Data Exfiltration Simulator',
       theme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.red,
@@ -49,62 +49,102 @@ class _SimulationHomePageState extends State<SimulationHomePage>
     with TickerProviderStateMixin {
   bool _simulationStarted = false;
   bool _showEndButton = false;
-  bool _showOptions = false;
+  bool _simulationComplete = false;
   String _simulationOutput = '';
   int _currentStep = 0;
   Timer? _timer;
   
   late AnimationController _pulseController;
-  late AnimationController _typewriterController;
   late Animation<double> _pulseAnimation;
   
   final List<String> _attackSteps = [
-    'Initializing attack simulation...',
-    'Establishing connection to C2 server (192.168.1.14:8080)...',
-    'Bypassing Windows Defender...',
-    'Escalating privileges...',
-    'Scanning for sensitive files...',
-    'Located target files in Documents folder...',
-    'Compressing files with AES-256 encryption...',
-    'Creating covert channel via DNS tunneling...',
-    'Exfiltrating data in 4KB chunks...',
-    'Progress: ████████████████████████████████ 100%',
-    'Data successfully transmitted (2.3 GB)...',
-    'Cleaning up traces...',
-    'Connection terminated.',
+    'Connecting to compromised endpoint: WORKSTATION-7834...',
+    'Establishing persistence via registry modification...',
+    'Bypassing Windows Defender real-time protection...',
+    'Injecting payload into explorer.exe process...',
+    'Escalating privileges using UAC bypass technique...',
+    'Enumerating network shares and mapped drives...',
+    'Scanning C:\\Users\\%USERNAME%\\Documents for sensitive files...',
+    'Located: customer_database.xlsx (2.1 MB)',
+    'Located: financial_records_2024.pdf (854 KB)',
+    'Located: employee_ssn_list.csv (234 KB)',
+    'Located: credit_card_data.txt (67 KB)',
+    'Located: confidential_contracts.zip (1.8 MB)',
+    'Compressing files using 7zip with password protection...',
+    'Splitting archive into 512KB chunks to avoid detection...',
+    'Establishing encrypted tunnel to C&C server 185.220.101.47:443...',
+    'Using HTTPS traffic to blend with normal web activity...',
+    'Uploading chunk 1/12... [████████████████████████████████] 100%',
+    'Uploading chunk 2/12... [████████████████████████████████] 100%',
+    'Uploading chunk 3/12... [████████████████████████████████] 100%',
+    'Uploading chunk 4/12... [████████████████████████████████] 100%',
+    'Uploading chunk 5/12... [████████████████████████████████] 100%',
+    'Uploading chunk 6/12... [████████████████████████████████] 100%',
+    'Uploading chunk 7/12... [████████████████████████████████] 100%',
+    'Uploading chunk 8/12... [████████████████████████████████] 100%',
+    'Uploading chunk 9/12... [████████████████████████████████] 100%',
+    'Uploading chunk 10/12... [███████████████████████████████] 100%',
+    'Uploading chunk 11/12... [███████████████████████████████] 100%',
+    'Uploading chunk 12/12... [███████████████████████████████] 100%',
+    'Total data exfiltrated: 5.2 MB in 47 seconds',
+    'Clearing event logs to hide tracks...',
+    'Removing temporary files and registry entries...',
+    'Terminating malicious processes...',
+    'Exfiltration complete. Connection closed.',
     '',
-    '🚨 SECURITY ALERT 🚨',
-    'Unusual network activity detected!',
-    'Multiple files being transmitted over suspicious ports.',
-    'Potential data breach in progress.',
-    'Immediate investigation required!'
+    '⚠️  SECURITY OPERATIONS CENTER ALERT ⚠️',
+    '',
+    'INCIDENT ID: INC-2024-0523-001',
+    'SEVERITY: HIGH',
+    'CLASSIFICATION: Data Breach',
+    '',
+    'Anomalous network activity detected:',
+    '• Unusual HTTPS traffic volume to external IP',
+    '• File access patterns outside normal business hours',
+    '• Multiple sensitive files accessed within short timeframe',
+    '• Process injection detected in explorer.exe',
+    '• Registry modifications in HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Run',
+    '',
+    'RECOMMENDATION: Initiate incident response protocol immediately',
+    'NEXT STEPS: Isolate affected systems and preserve forensic evidence'
   ];
 
-  final List<Map<String, dynamic>> _scenarios = [
+  final List<Map<String, String>> _realWorldExamples = [
     {
-      'title': 'Email Phishing Attack',
-      'description': 'Simulates credential harvesting via malicious email',
-      'icon': Icons.email,
-      'color': Colors.orange,
+      'company': 'Equifax (2017)',
+      'impact': '147 million records compromised',
+      'method': 'Web application vulnerability exploitation',
+      'data': 'SSNs, birth dates, addresses, credit card numbers',
+      'cost': '\$4 billion in total costs'
     },
     {
-      'title': 'Data Exfiltration',
-      'description': 'Demonstrates unauthorized data extraction',
-      'icon': Icons.cloud_download,
-      'color': Colors.red,
+      'company': 'Capital One (2019)',
+      'impact': '100 million customers affected',
+      'method': 'Misconfigured AWS S3 bucket access',
+      'data': 'Credit applications, SSNs, bank account numbers',
+      'cost': '\$270 million in fines and costs'
     },
     {
-      'title': 'Ransomware Simulation',
-      'description': 'Shows file encryption and ransom demands',
-      'icon': Icons.lock,
-      'color': Colors.purple,
+      'company': 'SolarWinds (2020)',
+      'impact': '18,000+ organizations compromised',
+      'method': 'Supply chain attack via software update',
+      'data': 'Government and corporate sensitive data',
+      'cost': 'Estimated \$100+ billion global impact'
     },
     {
-      'title': 'Network Intrusion',
-      'description': 'Lateral movement and privilege escalation',
-      'icon': Icons.network_check,
-      'color': Colors.blue,
+      'company': 'Colonial Pipeline (2021)',
+      'impact': 'US fuel supply disrupted for 6 days',
+      'method': 'Ransomware via compromised VPN credentials',
+      'data': 'Operational systems and business data',
+      'cost': '\$4.4 million ransom paid + operational losses'
     },
+    {
+      'company': 'T-Mobile (2021)',
+      'impact': '54 million customers affected',
+      'method': 'Unauthorized access through unprotected router',
+      'data': 'SSNs, driver license info, phone numbers',
+      'cost': '\$350 million class-action settlement'
+    }
   ];
 
   @override
@@ -115,14 +155,9 @@ class _SimulationHomePageState extends State<SimulationHomePage>
       vsync: this,
     )..repeat(reverse: true);
     
-    _typewriterController = AnimationController(
-      duration: Duration(seconds: 1),
-      vsync: this,
-    );
-    
     _pulseAnimation = Tween<double>(
-      begin: 0.8,
-      end: 1.2,
+      begin: 0.9,
+      end: 1.1,
     ).animate(CurvedAnimation(
       parent: _pulseController,
       curve: Curves.easeInOut,
@@ -133,7 +168,6 @@ class _SimulationHomePageState extends State<SimulationHomePage>
   void dispose() {
     _timer?.cancel();
     _pulseController.dispose();
-    _typewriterController.dispose();
     super.dispose();
   }
 
@@ -142,9 +176,10 @@ class _SimulationHomePageState extends State<SimulationHomePage>
       _simulationStarted = true;
       _simulationOutput = '';
       _currentStep = 0;
+      _simulationComplete = false;
     });
 
-    _timer = Timer.periodic(Duration(milliseconds: 800), (timer) {
+    _timer = Timer.periodic(Duration(milliseconds: 600), (timer) {
       if (_currentStep < _attackSteps.length) {
         setState(() {
           _simulationOutput += _attackSteps[_currentStep] + '\n';
@@ -153,7 +188,7 @@ class _SimulationHomePageState extends State<SimulationHomePage>
         
         // Add haptic feedback for critical alerts
         if (_attackSteps[_currentStep - 1].contains('ALERT')) {
-          HapticFeedback.vibrate();
+          HapticFeedback.heavyImpact();
         }
       } else {
         timer.cancel();
@@ -169,122 +204,7 @@ class _SimulationHomePageState extends State<SimulationHomePage>
     setState(() {
       _simulationStarted = false;
       _showEndButton = false;
-      _simulationOutput = 'Simulation complete. Analyze the attack or explore preventive measures.';
-      _showOptions = true;
-    });
-  }
-
-  void _showAnalysis() {
-    setState(() {
-      _simulationOutput = '''
-═══════════════════════════════════════
-          INCIDENT ANALYSIS REPORT
-═══════════════════════════════════════
-
-🔍 ATTACK TIMELINE:
-[14:32:15] Initial compromise via phishing email
-[14:32:45] Malicious payload executed
-[14:33:12] Privilege escalation successful
-[14:33:28] File enumeration initiated
-[14:34:01] Sensitive data identified
-[14:34:33] Data compression started
-[14:35:12] Exfiltration commenced
-[14:37:45] 2.3 GB successfully transmitted
-
-📂 COMPROMISED FILES:
-• Employee_Database.xlsx (1.2 GB)
-• Financial_Reports_Q4.pdf (456 MB)
-• Client_Contracts_2024.zip (234 MB)
-• System_Credentials.txt (12 KB)
-• Network_Topology.png (890 KB)
-
-🚩 INDICATORS OF COMPROMISE:
-• Unusual outbound traffic on port 8080
-• DNS queries to suspicious domains
-• PowerShell execution by non-admin user
-• File access outside normal hours
-• Large file transfers detected
-
-⚠️ RISK ASSESSMENT: CRITICAL
-Data sensitivity: HIGH
-Compliance impact: SEVERE
-Business continuity: AFFECTED
-
-💰 ESTIMATED IMPACT:
-• Regulatory fines: \$2.5M - \$15M
-• Business disruption: \$500K
-• Incident response: \$250K
-• Reputation damage: SIGNIFICANT
-''';
-      _showOptions = false;
-    });
-  }
-
-  void _showPreventiveMeasures() {
-    setState(() {
-      _simulationOutput = '''
-═══════════════════════════════════════
-        CYBERSECURITY COUNTERMEASURES
-═══════════════════════════════════════
-
-🛡️ TECHNICAL CONTROLS:
-✅ Data Loss Prevention (DLP)
-   → Monitor and block sensitive data transfers
-   → Real-time content inspection
-   
-✅ Network Segmentation
-   → Isolate critical systems
-   → Implement zero-trust architecture
-   
-✅ Endpoint Detection & Response (EDR)
-   → Behavioral analysis
-   → Automated threat hunting
-   
-✅ Email Security Gateway
-   → Advanced threat protection
-   → Sandbox analysis for attachments
-
-👥 HUMAN CONTROLS:
-✅ Security Awareness Training
-   → Monthly phishing simulations
-   → Incident reporting procedures
-   
-✅ Access Management
-   → Principle of least privilege
-   → Multi-factor authentication
-   
-✅ Incident Response Plan
-   → Clear escalation procedures
-   → Regular tabletop exercises
-
-📊 MONITORING & DETECTION:
-✅ SIEM Implementation
-   → Real-time log analysis
-   → Correlation rules for anomalies
-   
-✅ Network Traffic Analysis
-   → Baseline establishment
-   → Anomaly detection algorithms
-   
-✅ File Integrity Monitoring
-   → Critical file change alerts
-   → Tamper detection
-
-🔧 CONFIGURATION HARDENING:
-✅ Disable unnecessary services
-✅ Regular security patches
-✅ Strong password policies
-✅ Encrypted communications
-✅ Backup and recovery procedures
-
-💡 RECOMMENDED IMMEDIATE ACTIONS:
-1. Deploy DLP solution
-2. Implement network monitoring
-3. Conduct security training
-4. Review access permissions
-5. Update incident response plan
-''';
-      _showOptions = false;
+      _simulationComplete = true;
     });
   }
 
@@ -292,46 +212,75 @@ Business continuity: AFFECTED
     setState(() {
       _simulationStarted = false;
       _showEndButton = false;
-      _showOptions = false;
+      _simulationComplete = false;
       _simulationOutput = '';
       _currentStep = 0;
     });
     _timer?.cancel();
   }
 
-  Widget _buildScenarioCard(Map<String, dynamic> scenario) {
+  Widget _buildRealWorldExample(Map<String, String> example) {
     return Card(
       margin: EdgeInsets.symmetric(vertical: 8),
       color: Color(0xFF21262D),
-      child: ListTile(
-        leading: AnimatedBuilder(
-          animation: _pulseAnimation,
-          builder: (context, child) {
-            return Transform.scale(
-              scale: scenario['title'] == 'Data Exfiltration' ? _pulseAnimation.value : 1.0,
-              child: Icon(
-                scenario['icon'],
-                color: scenario['color'],
-                size: 32,
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.business, color: Colors.red, size: 20),
+                SizedBox(width: 8),
+                Text(
+                  example['company']!,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 12),
+            _buildDetailRow('Impact:', example['impact']!, Colors.orange),
+            _buildDetailRow('Attack Method:', example['method']!, Colors.blue),
+            _buildDetailRow('Data Compromised:', example['data']!, Colors.purple),
+            _buildDetailRow('Financial Cost:', example['cost']!, Colors.red),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(String label, String value, Color color) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 120,
+            child: Text(
+              label,
+              style: TextStyle(
+                color: color,
+                fontWeight: FontWeight.w500,
+                fontSize: 13,
               ),
-            );
-          },
-        ),
-        title: Text(
-          scenario['title'],
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+            ),
           ),
-        ),
-        subtitle: Text(
-          scenario['description'],
-          style: TextStyle(color: Colors.grey[400]),
-        ),
-        trailing: scenario['title'] == 'Data Exfiltration'
-            ? Icon(Icons.play_arrow, color: Colors.green)
-            : Icon(Icons.lock, color: Colors.grey),
-        onTap: scenario['title'] == 'Data Exfiltration' ? _startSimulation : null,
+          Expanded(
+            child: Text(
+              value,
+              style: TextStyle(
+                color: Colors.grey[300],
+                fontSize: 13,
+                height: 1.3,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -344,11 +293,11 @@ Business continuity: AFFECTED
           children: [
             Icon(Icons.security, color: Colors.red),
             SizedBox(width: 8),
-            Text('CyberSec Training Simulator'),
+            Text('Data Exfiltration Simulator'),
           ],
         ),
         actions: [
-          if (_simulationStarted || _showOptions)
+          if (_simulationStarted || _simulationComplete)
             IconButton(
               icon: Icon(Icons.refresh),
               onPressed: _resetSimulation,
@@ -361,56 +310,58 @@ Business continuity: AFFECTED
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (!_simulationStarted && !_showOptions) ...[
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Color(0xFF21262D),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.blue.withOpacity(0.3)),
-                ),
+            if (!_simulationStarted && !_simulationComplete) ...[
+              Center(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Icon(Icons.info_outline, color: Colors.blue),
-                        SizedBox(width: 8),
-                        Text(
-                          'Welcome to CyberSec Training',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                    SizedBox(height: 40),
+                    AnimatedBuilder(
+                      animation: _pulseAnimation,
+                      builder: (context, child) {
+                        return Transform.scale(
+                          scale: _pulseAnimation.value,
+                          child: Icon(
+                            Icons.cloud_download,
+                            size: 80,
+                            color: Colors.red,
                           ),
-                        ),
-                      ],
+                        );
+                      },
                     ),
-                    SizedBox(height: 12),
+                    SizedBox(height: 24),
                     Text(
-                      'Experience realistic cybersecurity attack simulations in a safe environment. Learn to identify threats, understand attack vectors, and implement effective countermeasures.',
+                      'Data Exfiltration Attack Simulation',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      'Experience a realistic data breach scenario',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.grey[300],
-                        height: 1.5,
+                        color: Colors.grey[400],
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 32),
+                    ElevatedButton.icon(
+                      onPressed: _startSimulation,
+                      icon: Icon(Icons.play_arrow),
+                      label: Text('Start Simulation'),
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                        textStyle: TextStyle(fontSize: 16),
                       ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 24),
-              Text(
-                'Available Simulations',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              SizedBox(height: 16),
-              ..._scenarios.map((scenario) => _buildScenarioCard(scenario)).toList(),
             ],
-            if (_simulationStarted || _showOptions)
+            if (_simulationStarted)
               Expanded(
                 child: Container(
                   width: double.infinity,
@@ -425,11 +376,76 @@ Business continuity: AFFECTED
                       _simulationOutput,
                       style: TextStyle(
                         fontFamily: 'monospace',
-                        fontSize: 14,
+                        fontSize: 13,
                         color: Colors.green[400],
                         height: 1.4,
                       ),
                     ),
+                  ),
+                ),
+              ),
+            if (_simulationComplete)
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Color(0xFF21262D),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.blue.withOpacity(0.3)),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.info_outline, color: Colors.blue),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Simulation Complete',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 12),
+                            Text(
+                              'This simulation demonstrated how attackers can infiltrate systems and exfiltrate sensitive data. The techniques shown are based on real-world attack patterns used by cybercriminals and nation-state actors.',
+                              style: TextStyle(
+                                color: Colors.grey[300],
+                                height: 1.5,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 24),
+                      Text(
+                        'Real-World Data Breaches',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Learn from major security incidents that have impacted millions of people:',
+                        style: TextStyle(
+                          color: Colors.grey[400],
+                          fontSize: 14,
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      ..._realWorldExamples.map((example) => _buildRealWorldExample(example)).toList(),
+                    ],
                   ),
                 ),
               ),
@@ -454,36 +470,6 @@ Business continuity: AFFECTED
                       );
                     },
                   ),
-                ),
-              ),
-            if (_showOptions)
-              Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: _showAnalysis,
-                        icon: Icon(Icons.analytics),
-                        label: Text('Detailed Analysis'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orange,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 12),
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: _showPreventiveMeasures,
-                        icon: Icon(Icons.shield),
-                        label: Text('Countermeasures'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
               ),
           ],
