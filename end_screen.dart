@@ -12,7 +12,7 @@ class _EndScreenState extends State<EndScreen> {
   @override
   void initState() {
     super.initState();
-    _confettiController = ConfettiController(duration: const Duration(seconds: 5));
+    _confettiController = ConfettiController(duration: Duration(seconds: 5));
     _confettiController.play();
   }
 
@@ -25,95 +25,71 @@ class _EndScreenState extends State<EndScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Simulation Complete"),
-        automaticallyImplyLeading: false,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.blue.shade900, Colors.purple.shade700],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-        ),
-      ),
       body: Stack(
         children: [
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.indigo.shade800, Colors.teal.shade600],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-            ),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.security, size: 80, color: Colors.white.withOpacity(0.8)),
-                    SizedBox(height: 30),
-                    AnimatedDefaultTextStyle(
-                      duration: Duration(milliseconds: 500),
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 10,
-                            color: Colors.white.withOpacity(0.5),
-                          ),
-                        ],
-                      ),
-                      child: Text("Simulation Ended"),
-                    ),
-                    SizedBox(height: 30),
-                    Text(
-                      "This was a safe demo to simulate an SMS scam. "
-                      "Never click on suspicious links or share your personal information.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white.withOpacity(0.9),
-                        height: 1.4,
-                      ),
-                    ),
-                    SizedBox(height: 40),
-                    ElevatedButton.icon(
-                      icon: Icon(Icons.arrow_forward, color: Colors.white),
-                      label: Text("Back to Safety"),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.transparent,
-                        onPrimary: Colors.white,
-                        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          side: BorderSide(color: Colors.white, width: 2),
-                        ),
-                        elevation: 8,
-                        shadowColor: Colors.white.withOpacity(0.3),
-                      ),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ],
-                ),
+                colors: [Colors.black, Colors.blue.shade900],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
             ),
           ),
           Align(
-            alignment: Alignment.topCenter,
-            child: ConfettiWidget(
-              confettiController: _confettiController,
-              blastDirection: -1,
-              emissionFrequency: 0.05,
-              numberOfParticles: 20,
-              gravity: 0.1,
-              shouldLoop: false,
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.security, size: 100, color: Colors.greenAccent),
+                SizedBox(height: 30),
+                Text("SYSTEM SECURED",
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.greenAccent,
+                      shadows: [
+                        Shadow(
+                          color: Colors.white,
+                          blurRadius: 20,
+                        ),
+                      ],
+                    )),
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  child: Text(
+                    "Simulation successfully terminated. Remember:\n"
+                    "1. Never share personal details\n"
+                    "2. Verify suspicious messages\n"
+                    "3. Use two-factor authentication",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ),
+                SizedBox(height: 40),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.green.shade900,
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                    shape: StadiumBorder(),
+                    elevation: 10,
+                  ),
+                  onPressed: () => Navigator.popUntil(
+                      context, (route) => route.isFirst),
+                  child: Text("RESTART SIMULATION",
+                      style: TextStyle(letterSpacing: 1.5)),
+                ),
+              ],
             ),
+          ),
+          ConfettiWidget(
+            confettiController: _confettiController,
+            blastDirection: -1,
+            emissionFrequency: 0.05,
+            numberOfParticles: 30,
+            gravity: 0.1,
+            colors: [Colors.greenAccent, Colors.blueAccent, Colors.white],
           ),
         ],
       ),
