@@ -1,0 +1,1676 @@
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
+import 'dart:math';
+import 'package:vibration/vibration.dart';
+import 'package:confetti/confetti.dart';
+import 'dart:async';
+
+// Enhanced Ransomware Simulation with Analysis and Prevention Features
+//
+// Required pubspec.yaml dependencies:
+// dependencies:
+//   flutter:
+//     sdk: flutter
+//   lottie: ^3.1.0
+//   animated_text_kit: ^4.2.2
+//   assets_audio_player: ^3.1.1
+//   vibration: ^1.8.4
+//   confetti: ^0.7.0
+//
+// Required assets folder structure:
+// assets/
+//   - alert.mp3
+//   - glitch.json
+//   - data_breach.json
+//   - lock.json
+//   - skull.json
+//   - bitcoin.json
+//   - success.json
+
+void main() {
+  runApp(
+    MaterialApp(
+      home: const FakeAppLauncher(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.redAccent,
+        colorScheme: ColorScheme.dark(
+          primary: Colors.redAccent,
+          secondary: Colors.orangeAccent,
+          surface: Colors.grey[900]!,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.redAccent,
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            elevation: 8,
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            foregroundColor: Colors.white,
+            side: const BorderSide(color: Colors.greenAccent, width: 2),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+// Device state model for analysis
+class DeviceState {
+  final List<String> vulnerabilities;
+  final List<String> protections;
+  final double securityScore;
+  final Map<String, dynamic> systemInfo;
+  final DateTime timestamp;
+
+  DeviceState({
+    required this.vulnerabilities,
+    required this.protections,
+    required this.securityScore,
+    required this.systemInfo,
+    required this.timestamp,
+  });
+}
+
+class FakeAppLauncher extends StatelessWidget {
+  const FakeAppLauncher({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Secure Calculator Pro",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.black87,
+        elevation: 4,
+        centerTitle: true,
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.black, Color(0xFF212121), Color(0xFF424242)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(32),
+                decoration: BoxDecoration(
+                  color: Colors.grey[900]?.withOpacity(0.8),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.redAccent.withOpacity(0.3),
+                      blurRadius: 20,
+                      spreadRadius: 5,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.calculate_outlined,
+                      size: 80,
+                      color: Colors.blueAccent,
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Advanced Calculator",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      "Perform complex calculations securely",
+                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                    ),
+                    const SizedBox(height: 30),
+                    ElevatedButton.icon(
+                      icon: const Icon(Icons.launch, size: 24),
+                      label: const Text(
+                        "Launch Calculator",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 16,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RansomwareSimulation(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class RansomwareSimulation extends StatefulWidget {
+  const RansomwareSimulation({super.key});
+
+  @override
+  _RansomwareSimulationState createState() => _RansomwareSimulationState();
+}
+
+class _RansomwareSimulationState extends State<RansomwareSimulation>
+    with TickerProviderStateMixin {
+  final AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer();
+  late AnimationController _glitchController;
+  late AnimationController _pulseController;
+  late ConfettiController _confettiController;
+  late PageController _pageController;
+  late Animation<double> _progressAnimation;
+  late Animation<double> _pulseAnimation;
+  late MatrixPainter _matrixPainter;
+  final Random _random = Random();
+
+  int _currentPage = 0;
+  double _bitcoinAmount = 0.0543;
+  bool _simulationActive = true;
+  Timer? _countdownTimer;
+  int _remainingTime = 86400; // 24 hours in seconds
+
+  // Device states for analysis
+  late DeviceState _beforeAttackState;
+  late DeviceState _afterAttackState;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeControllers();
+    _initializeDeviceStates();
+    _startSimulation();
+  }
+
+  void _initializeControllers() {
+    _glitchController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    )..repeat(reverse: true);
+
+    _pulseController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    )..repeat(reverse: true);
+
+    _confettiController = ConfettiController(
+      duration: const Duration(seconds: 3),
+    );
+    _pageController = PageController(initialPage: 0);
+
+    _progressAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _glitchController, curve: Curves.linear));
+
+    _pulseAnimation = Tween<double>(begin: 0.7, end: 1.0).animate(
+      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
+    );
+
+    _matrixPainter = MatrixPainter(
+      animation: _glitchController,
+      random: _random,
+    );
+  }
+
+  void _initializeDeviceStates() {
+    _beforeAttackState = DeviceState(
+      vulnerabilities: [
+        'Outdated operating system',
+        'Missing security patches',
+        'Weak firewall configuration',
+        'No real-time protection',
+        'Disabled automatic updates',
+        'Unencrypted sensitive data',
+        'Admin privileges for standard users',
+      ],
+      protections: [
+        'Basic antivirus (outdated)',
+        'Windows Defender (disabled)',
+        'Manual backup (last: 30 days ago)',
+      ],
+      securityScore: 3.2,
+      systemInfo: {
+        'OS': 'Windows 10 (Build 19041)',
+        'Last Update': '45 days ago',
+        'Firewall': 'Disabled',
+        'Real-time Protection': 'Off',
+        'Backup Status': 'Outdated',
+        'Network': 'Public WiFi',
+      },
+      timestamp: DateTime.now().subtract(const Duration(minutes: 5)),
+    );
+
+    _afterAttackState = DeviceState(
+      vulnerabilities: [
+        'System compromised by ransomware',
+        'Files encrypted with AES-256',
+        'Registry modifications detected',
+        'Network communication with C&C server',
+        'Shadow copies deleted',
+        'System restore points removed',
+        'Boot sector potentially modified',
+      ],
+      protections: [
+        'Antivirus bypassed',
+        'Firewall rules modified',
+        'Windows Defender quarantined',
+      ],
+      securityScore: 0.5,
+      systemInfo: {
+        'Encryption Status': '4,382 files encrypted',
+        'Affected File Types': '.doc, .pdf, .jpg, .mp4, .xlsx',
+        'Ransom Note': 'README_DECRYPT.txt',
+        'Payment Address': '1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2',
+        'Time Remaining': '23:59:59',
+        'Network Activity': 'Tor connections detected',
+      },
+      timestamp: DateTime.now(),
+    );
+  }
+
+  void _startSimulation() {
+    _playSound();
+    _startVibration();
+    _startCountdown();
+  }
+
+  void _startCountdown() {
+    _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_remainingTime > 0 && _simulationActive) {
+        setState(() => _remainingTime--);
+      }
+    });
+  }
+
+  void _playSound() async {
+    try {
+      await _audioPlayer.open(
+        Audio("assets/alert.mp3"),
+        loopMode: LoopMode.single,
+        volume: 0.6,
+      );
+    } catch (e) {
+      debugPrint("Audio error: $e");
+    }
+  }
+
+  void _startVibration() async {
+    try {
+      bool? hasVibrator = await Vibration.hasVibrator();
+      if (hasVibrator ?? false) {
+        Vibration.vibrate(pattern: [0, 500, 200, 500], repeat: 2);
+      }
+    } catch (e) {
+      debugPrint("Vibration error: $e");
+    }
+  }
+
+  void _triggerEffect() {
+    if (!_simulationActive) return;
+
+    if (_currentPage < 6) {
+      setState(() {
+        _currentPage++;
+        if (_currentPage == 3) _bitcoinAmount = 0.5;
+        if (_currentPage == 6) {
+          _confettiController.play();
+          _simulationActive = false;
+        }
+      });
+      _pageController.animateToPage(
+        _currentPage,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void _endSimulation() {
+    setState(() {
+      _simulationActive = false;
+      _currentPage = 6;
+    });
+    _confettiController.play();
+    _pageController.animateToPage(
+      6,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  String _formatTime(int seconds) {
+    int hours = seconds ~/ 3600;
+    int minutes = (seconds % 3600) ~/ 60;
+    int secs = seconds % 60;
+    return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${secs.toString().padLeft(2, '0')}';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PopScope(
+      canPop: !_simulationActive || _currentPage >= 6,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Stack(
+          children: [
+            PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: _pageController,
+              onPageChanged: (page) {
+                if (mounted) setState(() => _currentPage = page);
+              },
+              children: [
+                _buildFakeCrashScreen(),
+                _buildMatrixEffect(),
+                _buildEncryptionScreen(),
+                _buildRansomNote(),
+                _buildPaymentScreen(),
+                _buildFinalThreatScreen(),
+                _buildResolutionScreen(),
+              ],
+            ),
+            // Emergency end simulation button
+            if (_simulationActive && _currentPage < 6)
+              Positioned(
+                top: 50,
+                right: 20,
+                child: ScaleTransition(
+                  scale: _pulseAnimation,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.red.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(25),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.red.withOpacity(0.5),
+                          blurRadius: 10,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                    ),
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.emergency,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                      onPressed: _endSimulation,
+                      tooltip: 'End Simulation',
+                    ),
+                  ),
+                ),
+              ),
+            // Confetti effect
+            if (_currentPage >= 6)
+              Align(
+                alignment: Alignment.topCenter,
+                child: ConfettiWidget(
+                  confettiController: _confettiController,
+                  blastDirectionality: BlastDirectionality.explosive,
+                  particleDrag: 0.05,
+                  emissionFrequency: 0.05,
+                  numberOfParticles: 100,
+                  gravity: 0.2,
+                  shouldLoop: false,
+                  colors: const [
+                    Colors.green,
+                    Colors.blue,
+                    Colors.pink,
+                    Colors.orange,
+                    Colors.purple,
+                  ],
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFakeCrashScreen() {
+    return GestureDetector(
+      onTap: _triggerEffect,
+      child: Container(
+        color: Colors.black,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            FadeTransition(
+              opacity: _glitchController,
+              child: Lottie.asset(
+                'assets/glitch.json',
+                repeat: true,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Container(
+                  color: Colors.red.withOpacity(0.1),
+                  child: const Center(
+                    child: Icon(Icons.warning, color: Colors.red, size: 100),
+                  ),
+                ),
+              ),
+            ),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AnimatedTextKit(
+                    animatedTexts: [
+                      TyperAnimatedText(
+                        '⚠ CRITICAL SYSTEM ERROR ⚠\n\nYOUR DEVICE IS COMPROMISED!\n\nUNAUTHORIZED ACCESS DETECTED',
+                        textAlign: TextAlign.center,
+                        textStyle: const TextStyle(
+                          fontSize: 28,
+                          color: Colors.redAccent,
+                          fontFamily: 'Courier',
+                          fontWeight: FontWeight.bold,
+                          shadows: [
+                            Shadow(color: Colors.red, blurRadius: 15),
+                            Shadow(color: Colors.white, blurRadius: 5),
+                          ],
+                        ),
+                        speed: const Duration(milliseconds: 60),
+                      ),
+                    ],
+                    totalRepeatCount: 1,
+                    onTap: _triggerEffect,
+                  ),
+                  const SizedBox(height: 40),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.red.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Text(
+                      'TAP TO CONTINUE',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMatrixEffect() {
+    return GestureDetector(
+      onTap: _triggerEffect,
+      child: Container(
+        color: Colors.black,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            CustomPaint(
+              painter: _matrixPainter,
+              size: Size.infinite,
+              child: Container(),
+            ),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Lottie.asset(
+                    'assets/data_breach.json',
+                    width: 300,
+                    repeat: true,
+                    errorBuilder: (context, error, stackTrace) => const Icon(
+                      Icons.security,
+                      color: Colors.green,
+                      size: 100,
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  AnimatedTextKit(
+                    animatedTexts: [
+                      WavyAnimatedText(
+                        'SCANNING SYSTEM FILES...',
+                        textStyle: const TextStyle(
+                          color: Colors.greenAccent,
+                          fontSize: 24,
+                          fontFamily: 'Courier',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      WavyAnimatedText(
+                        '4,382 FILES FOUND',
+                        textStyle: const TextStyle(
+                          color: Colors.yellowAccent,
+                          fontSize: 28,
+                          fontFamily: 'Courier',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      WavyAnimatedText(
+                        'INITIATING ENCRYPTION...',
+                        textStyle: const TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 24,
+                          fontFamily: 'Courier',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                    repeatForever: true,
+                    onTap: _triggerEffect,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEncryptionScreen() {
+    return GestureDetector(
+      onTap: _triggerEffect,
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.black, Color(0xFFB71C1C), Colors.black],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Lottie.asset(
+                'assets/lock.json',
+                width: 250,
+                repeat: true,
+                errorBuilder: (context, error, stackTrace) =>
+                    const Icon(Icons.lock, color: Colors.red, size: 100),
+              ),
+              const SizedBox(height: 30),
+              AnimatedTextKit(
+                animatedTexts: [
+                  TyperAnimatedText(
+                    'ENCRYPTING YOUR FILES...',
+                    textStyle: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontFamily: 'Courier',
+                      fontWeight: FontWeight.bold,
+                      shadows: [Shadow(color: Colors.red, blurRadius: 10)],
+                    ),
+                    speed: const Duration(milliseconds: 100),
+                  ),
+                ],
+                totalRepeatCount: 1,
+              ),
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Column(
+                  children: [
+                    LinearProgressIndicator(
+                      value: _progressAnimation.value,
+                      backgroundColor: Colors.grey[800],
+                      valueColor: const AlwaysStoppedAnimation<Color>(
+                        Colors.redAccent,
+                      ),
+                      minHeight: 8,
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      '${(_progressAnimation.value * 100).toInt()}% Complete',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontFamily: 'Courier',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 40),
+              const Text(
+                'Documents • Photos • Videos • Music\nSpreadsheets • Presentations • Archives',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.redAccent,
+                  fontSize: 16,
+                  fontFamily: 'Courier',
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRansomNote() {
+    return GestureDetector(
+      onTap: _triggerEffect,
+      child: Container(
+        color: Colors.black87,
+        padding: const EdgeInsets.all(20),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Lottie.asset(
+                  'assets/skull.json',
+                  width: 200,
+                  repeat: true,
+                  errorBuilder: (context, error, stackTrace) =>
+                      const Icon(Icons.warning, color: Colors.red, size: 100),
+                ),
+                const SizedBox(height: 20),
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.red.withOpacity(0.1),
+                    border: Border.all(color: Colors.red, width: 2),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: AnimatedTextKit(
+                    animatedTexts: [
+                      TyperAnimatedText(
+                        '💀 YOUR FILES ARE ENCRYPTED! 💀\n\n'
+                        '🔒 4,382 files have been locked with military-grade encryption\n\n'
+                        '💰 Pay ${_bitcoinAmount.toStringAsFixed(4)} BTC to recover your data\n\n'
+                        '⏰ You have ${_formatTime(_remainingTime)} remaining\n\n'
+                        '📧 BTC Address:\n1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2\n\n'
+                        '⚠ Do not restart your computer\n'
+                        '⚠ Do not run antivirus software\n'
+                        '⚠ Do not attempt file recovery\n\n'
+                        'Failure to pay will result in permanent data loss!',
+                        textAlign: TextAlign.center,
+                        textStyle: const TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 16,
+                          fontFamily: 'Courier',
+                          height: 1.4,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        speed: const Duration(milliseconds: 30),
+                      ),
+                    ],
+                    totalRepeatCount: 1,
+                    onTap: _triggerEffect,
+                  ),
+                ),
+                const SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton.icon(
+                      icon: const Icon(Icons.payment, size: 20),
+                      label: const Text('PAY NOW'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red[700],
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 25,
+                          vertical: 15,
+                        ),
+                      ),
+                      onPressed: _triggerEffect,
+                    ),
+                    OutlinedButton.icon(
+                      icon: const Icon(Icons.help_outline, size: 20),
+                      label: const Text('HELP'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.orange,
+                        side: const BorderSide(color: Colors.orange),
+                      ),
+                      onPressed: _triggerEffect,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPaymentScreen() {
+    return GestureDetector(
+      onTap: _triggerEffect,
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.black, Color(0xFFBF360C), Colors.black],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Lottie.asset(
+                  'assets/bitcoin.json',
+                  width: 280,
+                  repeat: true,
+                  errorBuilder: (context, error, stackTrace) => const Icon(
+                    Icons.currency_bitcoin,
+                    color: Colors.orange,
+                    size: 100,
+                  ),
+                ),
+                const SizedBox(height: 30),
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.orange.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: Colors.orange, width: 2),
+                  ),
+                  child: Column(
+                    children: [
+                      const Text(
+                        '🔄 PROCESSING PAYMENT',
+                        style: TextStyle(
+                          color: Colors.greenAccent,
+                          fontSize: 24,
+                          fontFamily: 'Courier',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TweenAnimationBuilder<double>(
+                        tween: Tween<double>(begin: 0.0, end: _bitcoinAmount),
+                        duration: const Duration(seconds: 4),
+                        builder: (context, double value, _) => Text(
+                          '₿ ${value.toStringAsFixed(4)}',
+                          style: const TextStyle(
+                            fontSize: 42,
+                            color: Colors.orangeAccent,
+                            fontFamily: 'Courier',
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              Shadow(color: Colors.orange, blurRadius: 15),
+                              Shadow(color: Colors.white, blurRadius: 5),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Transaction ID: 7f9a8b2c1e4d5f6g8h9i0j',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14,
+                          fontFamily: 'Courier',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 30),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  child: Column(
+                    children: [
+                      LinearProgressIndicator(
+                        value: _progressAnimation.value,
+                        backgroundColor: Colors.grey[800],
+                        valueColor: const AlwaysStoppedAnimation<Color>(
+                          Colors.orangeAccent,
+                        ),
+                        minHeight: 10,
+                      ),
+                      const SizedBox(height: 15),
+                      const Text(
+                        'Confirming blockchain transaction...\nPlease wait while we verify your payment',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0xFFB0BEC5),
+                          fontSize: 16,
+                          fontFamily: 'Courier',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.verified, size: 20),
+                  label: const Text('VERIFY PAYMENT'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green[700],
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 30,
+                      vertical: 15,
+                    ),
+                  ),
+                  onPressed: _triggerEffect,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFinalThreatScreen() {
+    return GestureDetector(
+      onTap: _triggerEffect,
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF4A0E0E), Colors.black, Color(0xFF4A0E0E)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ScaleTransition(
+                  scale: _pulseAnimation,
+                  child: Container(
+                    padding: const EdgeInsets.all(30),
+                    decoration: BoxDecoration(
+                      color: Colors.red.withOpacity(0.2),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.red.withOpacity(0.5),
+                          blurRadius: 30,
+                          spreadRadius: 10,
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.warning,
+                      color: Colors.red,
+                      size: 80,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                AnimatedTextKit(
+                  animatedTexts: [
+                    TyperAnimatedText(
+                      '⚠ FINAL WARNING ⚠\n\n'
+                      'PAYMENT VERIFICATION FAILED!\n\n'
+                      'Your data will be PERMANENTLY DELETED in:\n'
+                      '${_formatTime(_remainingTime)}\n\n'
+                      'This is your LAST CHANCE to save your files!\n\n'
+                      '🔥 Photos of your family\n'
+                      '💼 Important work documents\n'
+                      '🎓 School projects and memories\n'
+                      '💰 Financial records\n\n'
+                      'All will be GONE FOREVER!',
+                      textAlign: TextAlign.center,
+                      textStyle: const TextStyle(
+                        color: Colors.redAccent,
+                        fontSize: 20,
+                        fontFamily: 'Courier',
+                        fontWeight: FontWeight.bold,
+                        height: 1.4,
+                      ),
+                      speed: const Duration(milliseconds: 50),
+                    ),
+                  ],
+                  totalRepeatCount: 1,
+                  onTap: _triggerEffect,
+                ),
+                const SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton.icon(
+                      icon: const Icon(Icons.payment, size: 20),
+                      label: const Text('RETRY PAYMENT'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red[800],
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 15,
+                        ),
+                      ),
+                      onPressed: _triggerEffect,
+                    ),
+                    ElevatedButton.icon(
+                      icon: const Icon(Icons.delete_forever, size: 20),
+                      label: const Text('ACCEPT LOSS'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey[800],
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 15,
+                        ),
+                      ),
+                      onPressed: _triggerEffect,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildResolutionScreen() {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.black, Color(0xFF1B5E20), Colors.black],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Lottie.asset(
+                'assets/success.json',
+                width: 300,
+                repeat: false,
+                errorBuilder: (context, error, stackTrace) => const Icon(
+                  Icons.check_circle,
+                  color: Colors.green,
+                  size: 100,
+                ),
+              ),
+              const SizedBox(height: 30),
+              AnimatedTextKit(
+                animatedTexts: [
+                  ScaleAnimatedText(
+                    '🎉 SIMULATION COMPLETE! 🎉',
+                    textStyle: const TextStyle(
+                      color: Colors.greenAccent,
+                      fontSize: 32,
+                      fontFamily: 'Courier',
+                      fontWeight: FontWeight.bold,
+                    ),
+                    duration: const Duration(milliseconds: 2000),
+                  ),
+                ],
+                totalRepeatCount: 1,
+              ),
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.green.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(color: Colors.green, width: 2),
+                ),
+                child: const Text(
+                  '✅ This was a controlled simulation\n'
+                  '✅ Your device and files are completely safe\n'
+                  '✅ No actual malware was installed\n'
+                  '✅ Educational purpose demonstration',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontFamily: 'Courier',
+                    height: 1.5,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 40),
+              Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 15,
+                runSpacing: 15,
+                children: [
+                  ElevatedButton.icon(
+                    icon: const Icon(Icons.analytics, size: 20),
+                    label: const Text('BEFORE ATTACK'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue[700],
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 15,
+                      ),
+                    ),
+                    onPressed: () => _showAnalysis(context, true),
+                  ),
+                  ElevatedButton.icon(
+                    icon: const Icon(Icons.security, size: 20),
+                    label: const Text('AFTER ATTACK'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange[700],
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 15,
+                      ),
+                    ),
+                    onPressed: () => _showAnalysis(context, false),
+                  ),
+                  ElevatedButton.icon(
+                    icon: const Icon(Icons.shield, size: 20),
+                    label: const Text('PREVENTION'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple[700],
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 15,
+                      ),
+                    ),
+                    onPressed: () => _showPreventiveMeasures(context),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 30),
+              OutlinedButton.icon(
+                icon: const Icon(Icons.exit_to_app, size: 24),
+                label: const Text(
+                  'EXIT SIMULATION',
+                  style: TextStyle(fontSize: 18),
+                ),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  side: const BorderSide(color: Colors.greenAccent, width: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 30,
+                    vertical: 15,
+                  ),
+                ),
+                onPressed: () {
+                  if (Navigator.canPop(context)) {
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showAnalysis(BuildContext context, bool beforeAttack) {
+    final state = beforeAttack ? _beforeAttackState : _afterAttackState;
+    final title = beforeAttack
+        ? 'Device State: Before Attack'
+        : 'Device State: After Attack';
+    final color = beforeAttack ? Colors.blue : Colors.orange;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        height: MediaQuery.of(context).size.height * 0.8,
+        decoration: BoxDecoration(
+          color: Colors.grey[900],
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          border: Border.all(color: color, width: 2),
+        ),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: color.withOpacity(0.2),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(18),
+                ),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    beforeAttack ? Icons.analytics : Icons.security,
+                    color: color,
+                    size: 30,
+                  ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        color: color,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildAnalysisSection(
+                      'Security Score',
+                      '${state.securityScore}/10',
+                      state.securityScore > 5 ? Colors.green : Colors.red,
+                      Icons.score,
+                    ),
+                    const SizedBox(height: 20),
+                    _buildAnalysisSection(
+                      'System Information',
+                      '',
+                      Colors.blue,
+                      Icons.computer,
+                    ),
+                    ...state.systemInfo.entries
+                        .map(
+                          (entry) => Padding(
+                            padding: const EdgeInsets.only(left: 20, bottom: 8),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.arrow_right,
+                                  color: Colors.grey,
+                                  size: 16,
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Text(
+                                    '${entry.key}: ${entry.value}',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    const SizedBox(height: 20),
+                    _buildAnalysisSection(
+                      'Vulnerabilities Found',
+                      '${state.vulnerabilities.length} issues',
+                      Colors.red,
+                      Icons.warning,
+                    ),
+                    ...state.vulnerabilities
+                        .map(
+                          (vuln) => Padding(
+                            padding: const EdgeInsets.only(left: 20, bottom: 8),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.error,
+                                  color: Colors.red,
+                                  size: 16,
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Text(
+                                    vuln,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    const SizedBox(height: 20),
+                    _buildAnalysisSection(
+                      'Active Protections',
+                      '${state.protections.length} enabled',
+                      state.protections.length > 2
+                          ? Colors.green
+                          : Colors.orange,
+                      Icons.shield,
+                    ),
+                    ...state.protections
+                        .map(
+                          (protection) => Padding(
+                            padding: const EdgeInsets.only(left: 20, bottom: 8),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.check_circle,
+                                  color: Colors.green,
+                                  size: 16,
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Text(
+                                    protection,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAnalysisSection(
+    String title,
+    String subtitle,
+    Color color,
+    IconData icon,
+  ) {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: color.withOpacity(0.3)),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: color, size: 24),
+          const SizedBox(width: 15),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: color,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                if (subtitle.isNotEmpty)
+                  Text(
+                    subtitle,
+                    style: const TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showPreventiveMeasures(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        height: MediaQuery.of(context).size.height * 0.9,
+        decoration: BoxDecoration(
+          color: Colors.grey[900],
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          border: Border.all(color: Colors.purple, width: 2),
+        ),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.purple.withOpacity(0.2),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(18),
+                ),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.shield, color: Colors.purple, size: 30),
+                  const SizedBox(width: 15),
+                  const Expanded(
+                    child: Text(
+                      'Ransomware Prevention Guide',
+                      style: TextStyle(
+                        color: Colors.purple,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildPreventionCategory(
+                      'Essential Security Measures',
+                      [
+                        'Keep your operating system and software updated',
+                        'Use reputable antivirus software with real-time protection',
+                        'Enable automatic security updates',
+                        'Use a firewall and keep it enabled',
+                        'Regularly scan your system for malware',
+                      ],
+                      Colors.green,
+                      Icons.security,
+                    ),
+                    const SizedBox(height: 20),
+                    _buildPreventionCategory(
+                      'Backup Strategies',
+                      [
+                        'Follow the 3-2-1 backup rule (3 copies, 2 different media, 1 offsite)',
+                        'Use automated backup solutions',
+                        'Test your backups regularly',
+                        'Keep offline backups disconnected from your network',
+                        'Use cloud storage with versioning capabilities',
+                      ],
+                      Colors.blue,
+                      Icons.backup,
+                    ),
+                    const SizedBox(height: 20),
+                    _buildPreventionCategory(
+                      'Safe Computing Practices',
+                      [
+                        'Be cautious with email attachments and links',
+                        'Download software only from official sources',
+                        'Use strong, unique passwords for all accounts',
+                        'Enable two-factor authentication where available',
+                        'Avoid using admin accounts for daily activities',
+                      ],
+                      Colors.orange,
+                      Icons.person_pin_circle,
+                    ),
+                    const SizedBox(height: 20),
+                    _buildPreventionCategory(
+                      'Network Security',
+                      [
+                        'Use secure, encrypted WiFi networks',
+                        'Avoid public WiFi for sensitive activities',
+                        'Keep your router firmware updated',
+                        'Use a VPN when connecting to public networks',
+                        'Disable unnecessary network services',
+                      ],
+                      Colors.cyan,
+                      Icons.wifi_lock,
+                    ),
+                    const SizedBox(height: 20),
+                    _buildPreventionCategory(
+                      'Advanced Protection',
+                      [
+                        'Implement application whitelisting',
+                        'Use endpoint detection and response (EDR) solutions',
+                        'Enable controlled folder access',
+                        'Regularly audit user permissions',
+                        'Consider using isolated environments for risky activities',
+                      ],
+                      Colors.red,
+                      Icons.admin_panel_settings,
+                    ),
+                    const SizedBox(height: 30),
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.yellow.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: Colors.yellow, width: 2),
+                      ),
+                      child: const Column(
+                        children: [
+                          Icon(Icons.lightbulb, color: Colors.yellow, size: 30),
+                          SizedBox(height: 10),
+                          Text(
+                            'Remember: Prevention is Always Better Than Recovery',
+                            style: TextStyle(
+                              color: Colors.yellow,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Implementing these measures significantly reduces your risk of falling victim to ransomware attacks.',
+                            style: TextStyle(color: Colors.white, fontSize: 14),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPreventionCategory(
+    String title,
+    List<String> items,
+    Color color,
+    IconData icon,
+  ) {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: color.withOpacity(0.3)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: color, size: 24),
+              const SizedBox(width: 15),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: color,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 15),
+          ...items
+              .map(
+                (item) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(Icons.check_circle, color: color, size: 16),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          item,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            height: 1.3,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+              .toList(),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    _glitchController.dispose();
+    _pulseController.dispose();
+    _confettiController.dispose();
+    _pageController.dispose();
+    _countdownTimer?.cancel();
+    super.dispose();
+  }
+}
+
+class MatrixPainter extends CustomPainter {
+  final Animation<double> animation;
+  final Random random;
+  final List<double> _yPositions = [];
+  final List<double> _speeds = [];
+  final List<List<String>> _characters;
+
+  static const int _numColumns = 30;
+  static const int _charsPerColumn = 35;
+
+  MatrixPainter({required this.animation, required this.random})
+    : _characters = List.generate(
+        _numColumns,
+        (i) => List.generate(
+          _charsPerColumn,
+          (j) => String.fromCharCode(0x30A0 + random.nextInt(96)),
+        ),
+      ),
+      super(repaint: animation) {
+    for (int i = 0; i < _numColumns; i++) {
+      _yPositions.add(
+        random.nextDouble() * -500.0 - (_charsPerColumn * 16.0 * 0.2),
+      );
+      _speeds.add(random.nextDouble() * 3.0 + 2.0);
+    }
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    const double charSize = 16.0;
+    final double columnWidth = size.width / _numColumns;
+
+    for (int i = 0; i < _numColumns; i++) {
+      for (int j = 0; j < _charsPerColumn; j++) {
+        final char = _characters[i][j];
+        final opacity = (1.0 - (j / _charsPerColumn)).clamp(0.3, 1.0);
+        final color = j == 0
+            ? Colors.white
+            : Colors.greenAccent.withOpacity(opacity);
+
+        final textStyle = TextStyle(
+          color: color,
+          fontSize: charSize,
+          fontFamily: 'Courier',
+          fontWeight: j == 0 ? FontWeight.bold : FontWeight.normal,
+          shadows: j == 0
+              ? [const Shadow(color: Colors.white, blurRadius: 8)]
+              : null,
+        );
+
+        final textSpan = TextSpan(text: char, style: textStyle);
+        final textPainter = TextPainter(
+          text: textSpan,
+          textAlign: TextAlign.center,
+          textDirection: TextDirection.ltr,
+        )..layout(minWidth: columnWidth);
+
+        double charYPos = _yPositions[i] + (j * charSize);
+
+        if (charYPos > -charSize && charYPos < size.height) {
+          textPainter.paint(canvas, Offset(i * columnWidth, charYPos));
+        }
+
+        if (j > 0 && random.nextInt(300) < 1) {
+          _characters[i][j] = String.fromCharCode(0x30A0 + random.nextInt(96));
+        }
+      }
+
+      _yPositions[i] += _speeds[i];
+
+      if (_yPositions[i] > size.height) {
+        _yPositions[i] =
+            random.nextDouble() * -200.0 - (_charsPerColumn * charSize * 0.5);
+        _speeds[i] = random.nextDouble() * 3.0 + 2.0;
+
+        for (int k = 0; k < _charsPerColumn; k++) {
+          _characters[i][k] = String.fromCharCode(0x30A0 + random.nextInt(96));
+        }
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant MatrixPainter oldDelegate) => true;
+}
