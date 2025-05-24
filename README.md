@@ -1,8 +1,3 @@
-Here is the **final, clean, and precise `README.md`** for your **ThreatTwin Hackathon Project**, including your team names and optimized for submission or GitHub:
-
----
-
-```markdown
 # ⚔️ ThreatTwin – Visualize Cyber Threats in Real-Time
 
 **ThreatTwin** is a real-time cybersecurity visualization tool developed during a hackathon to **educate users** and **simulate digital attacks** through animated storytelling. It transforms complex cyber threats into intuitive visual experiences using modular, lightweight animations.
@@ -97,16 +92,16 @@ MIT License — Free to use, modify, and distribute.
 
 ## 📬 Contact
 
-📧 \[[your-email@example.com](mailto:your-email@example.com)]
-🌐 GitHub: \[github.com/your-username]
+📧 mail : tanmayjayanthi2005@gmail.com
+🌐 GitHub: https://github.com/tanma12345
+
+📧 mail : varunkarangula2006@gmail.com
+🌐 GitHub: https://github.com/varunkarangula
+
+📧 mail : vpscholachetan24@gmail.com
+🌐 GitHub: https://github.com/CholaGanesh05
 
 ```
 
 ---
 
-Let me know if you'd like:
-- A polished **Devpost version**
-- A matching **slide deck / pitch deck**
-- GitHub **badges**, **GIF demo**, or **screenshots** added  
-I can generate those for you next!
-```
